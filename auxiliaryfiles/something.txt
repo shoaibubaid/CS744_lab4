@@ -1,0 +1,83 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+
+#define BACKLOG 5
+#define BUF_SIZE 1024
+
+int main(int argc, char *argv[])
+{
+    int server_socket_fd, accepted_fd, ret;
+    struct sockaddr_in server_addr, client_addr;
+    char *message = "world";
+    char buffer[BUF_SIZE] = {0};
+
+    // Create socket
+    if ((server_socket_fd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
+    {
+        perror("Server socket creation failed");
+        return -1;
+    }
+
+    // Bind socket with an address
+    server_addr.sin_family = AF_INET;
+    server_addr.sin_port = htons(8080);
+    server_addr.sin_addr.s_addr = INADDR_ANY;
+
+    if (bind(server_socket_fd, (struct sockaddr *)&server_addr, sizeof(server_addr)) != 0)
+    {
+        perror("Socket binding failed");
+        close(server_socket_fd);
+        return -1;
+    }
+
+    // Listen for new connections
+    if (listen(server_socket_fd, BACKLOG) != 0)
+    {
+        perror("Listen failed at server");
+        close(server_socket_fd);
+        return -1;
+    }
+
+    // Accept new connections
+    socklen_t client_addr_len = sizeof(client_addr);
+    accepted_fd = accept(server_socket_fd, (struct sockaddr *)&client_addr, &client_addr_len);
+    if (accepted_fd < 0)
+    {
+        perror("Unable to accept the connection");
+        close(server_socket_fd);
+        return -1;
+    }
+
+    printf("Connection accepted from IP: %s, Port: %d\n", inet_ntoa(client_addr.sin_addr), ntohs(client_addr.sin_port));
+
+    // Receive message from client
+    ret = recv(accepted_fd, buffer, BUF_SIZE, 0); // Use accepted_fd here
+    if (ret <= 0)
+    {
+        perror("Failed to receive message");
+        close(accepted_fd);
+        close(server_socket_fd);
+        return -1;
+    }
+    printf("Received: %s\n", buffer);
+
+    // Send message to client
+    ret = send(accepted_fd, message, strlen(message), 0); // Use accepted_fd here
+    if (ret == -1)
+    {
+        perror("Failed to send message");
+        close(accepted_fd);
+        close(server_socket_fd);
+        return -1;
+    }
+    printf("Sent: %s\n", message);
+
+    // Clean up
+    close(accepted_fd);
+    close(server_socket_fd);
+    return 0;
+}
