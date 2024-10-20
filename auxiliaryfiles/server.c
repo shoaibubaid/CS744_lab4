@@ -47,16 +47,16 @@ int main(int argc, char *argv[])
     // accept the new connections
 
     socklen_t client_addr_len = sizeof(client_addr);
-    if ((accepted_fd = accept(server_socket_fd, (struct sockaddr *)&client_addr, &client_addr_len)) < 0)
-    {
-        printf("unable to accept the connections.\n");
-        return -1;
-    }
-
-    printf("the connection is accepted with the client at port number %d and IP address %d\n", server_addr.sin_port, server_addr.sin_addr.s_addr);
-
     for (;;)
     {
+        if ((accepted_fd = accept(server_socket_fd, (struct sockaddr *)&client_addr, &client_addr_len)) < 0)
+        {
+            printf("unable to accept the connections.\n");
+            return -1;
+        }
+
+        printf("the connection is accepted with the client at port number %d and IP address %d\n", server_addr.sin_port, server_addr.sin_addr.s_addr);
+
         memset(buffer, 0, BUF_SIZE);
         ret = recv(accepted_fd, buffer, BUF_SIZE, 0);
         if (ret == -1)
@@ -73,9 +73,9 @@ int main(int argc, char *argv[])
             return -1;
         }
         printf("Sent: %s\n", message);
+        close(accepted_fd);
     }
 
-    close(accepted_fd);
     close(server_socket_fd);
     return 0;
 }
