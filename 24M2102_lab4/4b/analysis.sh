@@ -15,7 +15,7 @@ SIZE='
 1024
 '
 
-PROGRAM='addmillion.c';
+PROGRAM='addmillion_modified.c';
 
 # Compile the program
 gcc ${PROGRAM} -lpthread -o a.out
@@ -27,6 +27,7 @@ touch results.txt
 # Run the analysis for different sizes of threads
 for i in ${SIZE}; do
     echo -n "${i} " >> results.txt
+    ./a.out ${i} 
     ./a.out ${i} | grep "Time spent:" | cut -d ' ' -f 3 >> results.txt
 done
 

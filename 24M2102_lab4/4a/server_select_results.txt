@@ -1,0 +1,72 @@
+1
+real    0m3.204s
+user    0m0.130s
+sys     0m0.072s
+
+
+2
+real    0m3.202s
+user    0m0.123s
+sys     0m0.084s
+
+
+4
+real    0m6.210s
+user    0m0.145s
+sys     0m0.075s
+
+
+
+8
+real    0m7.203s
+user    0m0.145s
+sys     0m0.085s
+
+
+16
+real    0m7.200s
+user    0m0.151s
+sys     0m0.114s
+
+
+32
+real    0m9.215s
+user    0m0.158s
+sys     0m0.168s
+
+
+64
+real    0m9.249s
+user    0m0.195s
+sys     0m0.312s
+
+
+128
+real    0m9.293s
+user    0m0.269s
+sys     0m0.503s
+
+256
+real    0m9.407s
+user    0m0.401s
+sys     0m1.034s
+
+512
+real    0m9.492s
+user    0m0.512s
+sys     0m1.481s
+
+
+1024
+real    0m9.518s
+user    0m0.711s
+sys     0m2.278s
+
+
+2048
+died - did for some clients and died
+
+
+
+4096
+died - did for some clients and died

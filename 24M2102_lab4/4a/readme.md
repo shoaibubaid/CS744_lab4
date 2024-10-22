@@ -22,4 +22,4 @@ bash loadgen.sh <no.of.clients> 127.0.0.1 8084
 To run server, use the format
 bash loadgen.sh <no.of.clients> 127.0.0.1 8085 
 
-time ./loadgen.sh 10 127.0.0.1 8081
+time ./loadgen.sh 10 127.0.0.1 <port>
