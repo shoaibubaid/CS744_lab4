@@ -6,7 +6,6 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 
-
 #define BUF_SIZE 1024
 
 int main(int argc, char *argv[])
@@ -37,7 +36,6 @@ int main(int argc, char *argv[])
     serv_addr.sin_family = AF_INET;
     serv_addr.sin_port = htons(port);
 
-    // Convert IPv4 and IPv6 addresses from text to binary form
     if (inet_pton(AF_INET, ip, &serv_addr.sin_addr) <= 0)
     {
         printf("Invalid address/ Address not supported\n");
